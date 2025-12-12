@@ -14,11 +14,12 @@ export const HomePage = () => {
     const [activeTab, setActiveTab] = useState<'all' | 'favorites' | 'heroes' | 'villains'>('all')
 
     //Peticion HTTP tanstack query
-    const { data } = useQuery({
+    const { data: heroesResponse } = useQuery({
         queryKey: ['heroes'],
         queryFn: () => getHeroesByPageAction(),
         staleTime: 1000 * 60 * 5,
     })
+    console.log({ heroesResponse });
 
     return (
         <>
@@ -55,16 +56,16 @@ export const HomePage = () => {
                     </TabsList>
 
                     <TabsContent value="all">
-                        <HeroGrid />
+                        <HeroGrid heroes={heroesResponse?.heroes ?? []} />
                     </TabsContent>
                     <TabsContent value="favorites">
-                        <HeroGrid />
+                        <HeroGrid heroes={[]} />
                     </TabsContent>
                     <TabsContent value="heroes">
-                        <HeroGrid />
+                        <HeroGrid heroes={[]} />
                     </TabsContent>
                     <TabsContent value="villains">
-                        <HeroGrid />
+                        <HeroGrid heroes={[]} />
                     </TabsContent>
                 </Tabs>
 
